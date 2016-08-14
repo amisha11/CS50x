@@ -1,0 +1,32 @@
+0.  What is pneumonoultramicroscopicsilicovolcanoconiosis?
+    pneumonoultramicroscopicsilicovolcanoconiosis is used to refer to a lung disease caused by inhaling very fine ash and sand dust.
+
+1.  According to its man page, what does getrusage do?
+    Returns resource usage measures.
+    
+2.  Per that same man page, how many members are in a variable of type struct rusage?
+    16
+    
+3.  Why do you think we pass before and after by reference (instead of by value) to calculate, even though we’re not changing their contents?
+    If we pass the variables by value instead, the function will create copies of the 2 rusage type variables which is a large struct with 16 members of which 14 are of the type long. This would consume a lot of stack space. In order to avoid that, we pass the variables by reference.
+    
+4.  Explain as precisely as possible, in a paragraph or more, how main goes about reading words from a file. In other words, convince us that you indeed understand how that function’s for loop works.
+    The file is read character by character using fgetc() until we reach the end of the file. For each character, we check if the character is indeed an alphabet or an apostrophe(not as the first characthe word), if it is true, we append the character to the array of char type called word. If the size of the string exceeds the word size, we exhaustively read the characters and then set the index back to 0 to read a new word. Else if it a digit, we follow the same procedure and read a new word. Once we encounter the \0 escape sequence, we pass the word to check fn to see if its misspelled or not. In the mentime, we also get the time taken by the check fn to return. If the word was misspelled, we add one to the misspelled variable that keeps the count of all the misspells.
+
+5.  Why do you think we used fgetc to read each word’s characters one at a time rather than use fscanf with a format string like "%s" to read whole words at a time? Put another way, what problems might arise by relying on fscanf alone?
+    Using fgetc allows us to read each word's characters and ignores words with numbers. If we use fscanf to get whole word at once, we won't be able to reject invalid words.
+
+6.  Why do you think we declared the parameters for check and load as const?
+    This has been done to ensure that in our implementation of the functions, we don't try to change the values passed to us.
+
+7.  What data structure(s) did you use to implement your spell-checker? Be sure not to leave your answer at just "hash table," "trie," or the like. Expound on what’s inside each of your "nodes."
+    I have used hash table. It is a separate chaining hash table. The node is a struct that has two members, first a character array of size lENGTH + 1 and second is a self-referential pointer. EaCh element of the array hash of the type node* has been initialised to null at the time of declaration. The hash function returns the index value where the hashed element goes.
+
+8.  How slow was your code the first time you got it working correctly?
+    Initially my code had a run time O(n) because my hash function wasn't distributing the entries uniformly over the hash table but clustering it around certain values.
+
+9.  What kinds of changes, if any, did you make to your code in order to improve its performance?
+    I changed my hash function. The previous hash fn used ASCII values to club entries.
+    
+10. Do you feel that your code has any bottlenecks that you were not able to chip away at?
+    Not really. I am satisfied with my code though I do believe that using trie've made my program run faster but the total time that my current implementation takes is not too bad.
